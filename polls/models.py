@@ -16,7 +16,7 @@ class Question(models.Model):
     def __unicode__(self):
         return self.question_text
 
-
+#Choice Model
 class Choice(models.Model):
     question = models.ForeignKey(Question)
     choice_text = models.CharField(max_length=200)
