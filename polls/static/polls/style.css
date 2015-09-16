@@ -1,6 +1,6 @@
-li a {
-   color: red;
+li, a {
+   color: White;
 }
 body {
-   background: white url("images/jellyfish.jpg") no-repeat right bottom;
+   background:  url("images/jellyfish.jpg") no-repeat ;
 }

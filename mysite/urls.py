@@ -19,4 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^polls/', include('polls.urls', namespace="polls")),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^bookmarks/', include('basic.bookmarks.urls')),
+    url(r'^blog/', include('blog.urls')),
 ]
