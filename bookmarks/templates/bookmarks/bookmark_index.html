@@ -1,0 +1,8 @@
+<h1>BookMarks</h1>
+<ul>
+{% for bk in bookmark_list %}
+    <li>{{ bk.url }}</li>
+{% empty %}
+    <li>No bookmarks yet.</li>
+{% endfor %}
+</ul>
