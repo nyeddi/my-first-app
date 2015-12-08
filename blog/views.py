@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
 from django.utils import timezone
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, ContactForm
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404,HttpResponse
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -28,7 +29,7 @@ def post_new(request):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect('blog.views.post_detail', pk=post.pk)
+            return redirect('blog:blog.views.post_detail', pk=post.pk)
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
@@ -91,3 +92,23 @@ def comment_remove(request,pk):
      post_pk = comment.post.pk
      comment.delete()
      return redirect('blog:blog.views.post_detail', pk=post_pk)
+
+def contact_us(request):
+    if request.method == "POST":
+       form = ContactForm(request.POST)
+       if form.is_valid():   
+             subject = form.cleaned_data['subject']
+             message = form.cleaned_data['message']
+             sender = form.cleaned_data['sender']
+             cc_myself = form.cleaned_data['cc_myself']
+
+             recipients = ['info@example.com']
+             if cc_myself:
+                 recipients.append(sender)
+
+             #send_mail(subject, message, sender, recipients)
+             #return redirect('/thanks/')
+             return HttpResponse("Hi {} Thank You for Contacting Us ".format(sender))
+    else:
+        form = ContactForm()
+    return render(request, 'blog/blog_contact.html', {'form': form})
